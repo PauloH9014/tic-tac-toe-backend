@@ -111,4 +111,8 @@ public class JogoServer implements JogoService{
             this.playerAtual = players.get(0);  // volta a ser 0 pois vai passar se method realizar jogada!
             this.inicioPartida = LocalDateTime.now();   // reseta o tempo de jogo!
     }
+
+    public Player getUltimPlayer() {
+        return ultimPlayer;
+    }
 }
