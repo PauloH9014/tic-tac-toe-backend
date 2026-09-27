@@ -1,10 +1,12 @@
 package Domain.Store;
 
 import Domain.Model.Partida;
+import Domain.Model.Player;
+import Domain.Service.RoundRepository;
 
 import java.util.ArrayList;
 
-public class PartidaStore {
+public class PartidaStore{
     private static PartidaStore storeWin; // statico é pertencer aquela classe!
     private ArrayList<Partida> partidas;
 

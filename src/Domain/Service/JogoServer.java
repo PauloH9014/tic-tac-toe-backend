@@ -7,9 +7,9 @@ import Domain.Model.Partida;
 import Domain.Model.Player;
 import Domain.Model.Tabuleiro;
 import Domain.Store.PartidaStore;
+import Domain.Store.RoundRepositoryImpl;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,9 @@ public class JogoServer implements JogoService{
     private Player ultimPlayer;
     private PartidaStore partidaStore;
     private LocalDateTime inicioPartida;
+    private RoundRepositoryImpl roundRepository;
 
-    public JogoServer(Player playerOne, Player playerTwo) {
+    public JogoServer(Player playerOne, Player playerTwo, RoundRepositoryImpl roundRepository) {
         this.tabuleiro = new Tabuleiro();
         this.players = new ArrayList<>();
         this.players.add(playerOne);
@@ -30,6 +31,7 @@ public class JogoServer implements JogoService{
         this.playerAtual = playerOne;
         this.partidaStore = PartidaStore.getStoreWin();
         this.inicioPartida = LocalDateTime.now();
+        this.roundRepository = roundRepository;
     }
 
     @Override
@@ -96,8 +98,10 @@ public class JogoServer implements JogoService{
         String namePlayerWin = ultimPlayer.getNamePlayer();
         long infoTimePartida = ChronoUnit.SECONDS.between(inicioPartida, LocalDateTime.now());
 
-        Partida infoPartidaSave = new Partida(namePlayerWin, LocalDateTime.now(),infoTimePartida);
-        partidaStore.savePartida(infoPartidaSave);
+        Partida saveinfoUser = new Partida(namePlayerWin, LocalDateTime.now(), infoTimePartida);
+
+        partidaStore.savePartida(saveinfoUser);
+        roundRepository.saveinfoRound(namePlayerWin, infoTimePartida);
     }
 
     @Override
